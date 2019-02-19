@@ -9,50 +9,34 @@
     <script src="gyronorm.js"></script>
     <script src="js/jquery.flightindicators.min.js"></script>
     <link rel="stylesheet" href="css/flightindicators.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <div id="attitude">loading...</div>
-    <div id="speedometer">loading...</div>
-    <div id="heading">loading...</div>
-    <div id="altimeter">loading...</div>
-    <div id="vario">loading...</div>
-    <div id="info">loading...</div>
+    <span id="attitude">loading...</span>
+    <span id="speedometer">loading...</span>
+    <span id="heading">loading...</span>
+    <span id="altimeter">loading...</span>
+    <span id="vario">loading...</span>
     <script>
       var gn = new GyroNorm();
-
-      var speedometer = $.flightIndicator("#speedometer", "airspeed", {
-        showBox: false
-      });
-      var heading = $.flightIndicator("#heading", "heading", {
-        showBox: false
-      });
-      var altimeter = $.flightIndicator("#altimeter", "altimeter", {
-        showBox: false
-      });
-      var attitude = $.flightIndicator("#attitude", "attitude", {
-        showBox: false
-      });
-      var variometer = $.flightIndicator("#vario", "variometer", {
-        showBox: false
-      });
+      var meterConfig = {
+        showBox: false,
+        width: 220,
+        height: 220
+      };
+      var speedometer = $.flightIndicator(
+        "#speedometer",
+        "airspeed",
+        meterConfig
+      );
+      var heading = $.flightIndicator("#heading", "heading", meterConfig);
+      var altimeter = $.flightIndicator("#altimeter", "altimeter", meterConfig);
+      var attitude = $.flightIndicator("#attitude", "attitude", meterConfig);
+      var variometer = $.flightIndicator("#vario", "variometer", meterConfig);
 
       gn.init()
         .then(function() {
           gn.start(function(data) {
-            // Process:
-            // data.do.alpha	( deviceorientation event alpha value )
-            // data.do.beta		( deviceorientation event beta value )
-            // data.do.gamma	( deviceorientation event gamma value )
-            // data.do.absolute	( deviceorientation event absolute value )
-            // data.dm.x		( devicemotion event acceleration x value )
-            // data.dm.y		( devicemotion event acceleration y value )
-            // data.dm.z		( devicemotion event acceleration z value )
-            // data.dm.gx		( devicemotion event accelerationIncludingGravity x value )
-            // data.dm.gy		( devicemotion event accelerationIncludingGravity y value )
-            // data.dm.gz		( devicemotion event accelerationIncludingGravity z value )
-            // data.dm.alpha	( devicemotion event rotationRate alpha value )
-            // data.dm.beta		( devicemotion event rotationRate beta value )
-            // data.dm.gamma	( devicemotion event rotationRate gamma value )
             document.getElementById("info").innerHTML = JSON.stringify(data);
             heading.setHeading(data.do.alpha);
             attitude.setPitch(data.do.beta);
@@ -61,7 +45,6 @@
           });
         })
         .catch(function(e) {
-          // Catch if the DeviceOrientation or DeviceMotion is not supported by the browser or device
           console.log({ e });
         });
 
