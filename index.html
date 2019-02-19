@@ -11,12 +11,11 @@
     <link rel="stylesheet" href="css/flightindicators.min.css" />
   </head>
   <body>
-    <div id="attitude">loading...</div>
-    <div id="speedometer">loading...</div>
-    <div id="heading">loading...</div>
-    <div id="altimeter">loading...</div>
-    <div id="vario">loading...</div>
-    <div id="info">loading...</div>
+    <span id="attitude">loading...</span>
+    <span id="speedometer">loading...</span>
+    <span id="heading">loading...</span>
+    <span id="altimeter">loading...</span>
+    <span id="vario">loading...</span>
     <script>
       var gn = new GyroNorm();
 
@@ -53,7 +52,7 @@
             // data.dm.alpha	( devicemotion event rotationRate alpha value )
             // data.dm.beta		( devicemotion event rotationRate beta value )
             // data.dm.gamma	( devicemotion event rotationRate gamma value )
-            document.getElementById("info").innerHTML = JSON.stringify(data);
+//             document.getElementById("info").innerHTML = JSON.stringify(data);
             heading.setHeading(data.do.alpha);
             attitude.setPitch(data.do.beta);
             attitude.setRoll(data.do.gamma);
